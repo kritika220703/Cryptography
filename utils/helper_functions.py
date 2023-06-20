@@ -39,4 +39,11 @@ def chunking(bits, chunk_length):
 
     return chunks
 
+def bin2hex(msg):
+    s1=""
+    for i in msg:
+        s1 = s1 + str(i)
 
+    bin_value = "0b" + s1
+    hex_value = hex(int(bin_value,2))
+    return hex_value[2:]

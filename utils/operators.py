@@ -4,7 +4,13 @@ def xor(x, y):
     else:
         return 0
     
-def XOR(l1, l2, l3):
+def XOR1(l1,l2):
+    ans=[]
+    for (i,j) in zip(l1, l2):
+        ans.append(xor(i,j))
+    return ans
+    
+def XOR2(l1, l2, l3):
     ans=[]
     for (i,j,k) in zip(l1, l2, l3):
         ans.append(xor(xor(i,j),k))
@@ -26,4 +32,22 @@ def shift_right(l, steps):
 
 def right_rotate(l, steps):
     return l[-steps:] + l[:-steps]
+
+def NOT(l):
+    ans=[]
+    for i in l:
+        if(i==0):
+            ans.append(1)
+        else:
+            ans.append(0)
+    return ans
+
+def AND(l1, l2):
+    ans=[]
+    for (i,j) in zip(l1,l2):
+        if(i==1 and j==1):
+            ans.append(1)
+        else:
+            ans.append(0)
+    return ans
 
