@@ -1,6 +1,8 @@
 from utils.helper_functions import *
 from utils.constants import *
 from utils.operators import *
+import datetime
+import random
 
 #convert K values in hex form to list of lists containing K values in bit form
 k=[]
@@ -70,9 +72,18 @@ def SHA_256(message):
     
     return has_val
 
+def otp():
+    current_datetime = datetime.datetime.now()
+    hash_value = SHA_256(str(current_datetime))
+    hash_value = int(hash_value,16)
+    n = random.randint(100000,999999)
+    print("OTP IS: ",hash_value%n)
+    
+    
 msg = input("Type your message: ")
 print("Your input: ", msg)
 print("Hash value: ", SHA_256(msg))
+otp()
 
         
 
