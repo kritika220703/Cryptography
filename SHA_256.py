@@ -27,12 +27,15 @@ def SHA_256(message):
     #breaking bits in chunks of 512
     chunks = chunking(msg_bits, 512)
 
+    #running 64 rounds of operation for every 512 bit chunk
     for chunk in chunks:
+        #break each 512-bit chunk into 16 sub blocks of 32-bits
         w = chunking(chunk, 32)
 
         for i in range(48):
             w.append(32*[0])
 
+        #initializing W[i] for rounds 16-63
         for i in range(16,64):
             s0 = XOR2(right_rotate(w[i-15],7), right_rotate(w[i-15],18), shift_right(w[i-15],3))
             s1 = XOR2(right_rotate(w[i-2],17), right_rotate(w[i-2],19), shift_right(w[i-2],10))
@@ -40,6 +43,7 @@ def SHA_256(message):
 
         a, b, c, d, e, f, g, h = buffers
 
+        #rounds of operation
         for i in range(64):
             ch = XOR1(AND(e,f), AND(NOT(e),g))
             ma = XOR2(AND(a,b), AND(a,c), AND(b,c))
@@ -66,6 +70,7 @@ def SHA_256(message):
         buffers[6] = add(buffers[6], g)
         buffers[7] = add(buffers[7], h)
 
+    #converting buffer values to hex form and concatenating them to form hash value
     has_val = ""
     for i in range(len(buffers)):
         has_val += bin2hex(buffers[i])
@@ -73,11 +78,16 @@ def SHA_256(message):
     return has_val
 
 def otp():
+    #obtaining current datetime using time library
     current_datetime = datetime.datetime.now()
+
+    #converting into string and using SHA_256 function made above to convert into hash 
     hash_value = SHA_256(str(current_datetime))
+
+    #converting hash into 6-digit OTP
     hash_value = int(hash_value,16)
     n = random.randint(100000,999999)
-    print("OTP IS: ",hash_value%n)
+    print("CURRENT TIME-DATE BASED OTP IS: ",hash_value%n)
     
     
 msg = input("Type your message: ")
